@@ -1,0 +1,47 @@
+# Where should we write the MP4?
+Output "${animation_file_path}"
+
+# Set up a ${width}x${height} terminal with ${typing_speed_ms}px font.
+Set FontSize 40
+Set Framerate 25
+Set TypingSpeed ${typing_speed_ms}ms
+Set Width ${width}
+Set Height ${height}
+Set Theme 'Cobalt Neon'
+
+Hide
+
+# Set the initial command prompt (PS1) to "> "
+Type 'PS1="> "'
+Enter 1
+
+# Clear the terminal screen.
+Type 'clear'
+Enter 1
+
+Show
+
+# Loop through the input_dict, which contains strings to be typed and their corresponding delays.
+% for string, delay in input_dict.items():
+<%
+    # Replace "<Tab>" with two spaces and split the string into lines.
+    lines = string.replace('<Tab>', '  ').split('\n')
+%>
+% for line in lines:
+% if line == "<Escape>":
+# If the line is "<Escape>", simulate pressing the Escape key.
+Escape
+% else:
+# Otherwise, type the current line and simulate pressing Enter.
+Type ${repr(line)}
+Enter 1
+% endif
+% endfor
+
+# Pause for the specified delay between input entries.
+# This gives the narrator time to finish speaking.
+Sleep ${delay}ms
+
+# Pause for a default delay after each input.
+Sleep ${DEFAULT_DELAY}ms
+% endfor

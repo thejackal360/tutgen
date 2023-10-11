@@ -1,0 +1,48 @@
+{
+    "commands":
+        [
+            {"type" : "CodeAnimationGenerator",
+             "text_mapping" : [
+                {
+                    "narration_text": "First, we're going to make the necessary imports.",
+                    "code_text": ["vim test_server.py",
+                                  "iimport flask",
+                                  "app = flask.Flask(__name__)"]
+                },
+                {
+                    "narration_text": "Then, we're going to instantiate our webapp and create a route.",
+                    "code_text": ["@app.route('/')",
+                                  "def hello():",
+                                  "    return 'Hello World!'"]
+                },
+                {
+                    "narration_text": "Finally, we'll run the app.",
+                    "code_text": ["if __name__ == '__main__':",
+                                  "    app.run()"]
+                },
+                {
+                    "narration_text": "We're now going to run the server.",
+                    "code_text": ["<Escape>",
+                                  ":x"]
+                }
+            ]
+        },
+        {"type" : "StartSubshell",
+         "name" : "server_subshell"},
+        {"type" : "ExecuteSubshell",
+         "subshell_name" : "server_subshell",
+         "command" : "python3.11 test_server.py &"},
+        {"type" : "BrowserInteraction",
+         "url" : "http://localhost:5000/",
+         "text" : "As you can see, the webpage is rendered as expected."},
+        {"type" : "TerminateSubshell",
+         "name" : "server_subshell"}
+        ],
+    "output_video_name" : "final_video.mp4",
+     "intro_outro" : {
+        "intro_code": ["rm -rf test_server.py",
+                       "clear"],
+        "outro_code": ["rm -rf test_server.py",
+                       "clear"]
+    }
+}
